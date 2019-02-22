@@ -7,15 +7,16 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "vuepress dev docs",
-    "build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "deploy": "sh deploy.sh"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
-    "vuepress": "^0.14.8"
+    "vuepress": "^0.14.9"
   }
 }

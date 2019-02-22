@@ -82,6 +82,7 @@ module.exports = {
         items: [
           { text: 'Git', link: '/Git/' },
           { text: '面经', link: '/Interview/' },
+          { text: 'LC', link: '/LeetCode/' },
           { text: '关于', link: '/About/' },
         ]
       }

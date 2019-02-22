@@ -23,7 +23,7 @@
 
 请始终使用短横线命名法
 
-## 在表单元素上使用v-model
+## 表单元素
 
 通常来说v-model只能用于表单元素
 
@@ -49,8 +49,6 @@ var vmodel0 = new Vue({
 
 使用v-model以后，表单元素和js变量之间就实现了双向绑定。
 
-### v-model是个语法糖（一）
-
 实际上，v-model就是一个语法糖
 
 ```html
@@ -66,7 +64,7 @@ var vmodel0 = new Vue({
 >
 ```
 
-## 在自定义组件上使用v-model
+## 自定义组件
 
 自定义组件与原生表单元素有2点不同：
 
@@ -113,8 +111,6 @@ var vmodel1 = new Vue({
 })
 ```
 
-### v-model是个语法糖（二）
-
 v-model作为一个语法糖，在原生HTML元素和自定义组件上略有一些不同：
 
 ```html
@@ -138,7 +134,7 @@ v-model作为一个语法糖，在原生HTML元素和自定义组件上略有一
 
 ```
 
-## 组件的model选项
+## model选项
 
 假如说我们把label-input这么改一下也是可以的，我们把属性value换了名字叫value123，emit的事件也改成了input123
 
@@ -220,7 +216,7 @@ var vmodel2 = new Vue({
 
 在组件上使用 v-on 只会监听自定义事件 (组件用 $emit 触发的事件)。如果要监听根元素的原生事件，应使用 .native 修饰符。
 
-但是`.native` 监听器在类似下面这样的一个**“input包裹器”** `<base-input>` 中将静默失败，它不会产生任何报错，但是 `onFocus` 处理函数不会如你预期地被调用。
+但是`.native` 监听器在类似下面这样的一个 **“input包裹器” **， `<base-input>` 中将静默失败，它不会产生任何报错，但是 `onFocus` 处理函数不会如你预期地被调用。
 
 ```html
 <label>

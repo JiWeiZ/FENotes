@@ -21,7 +21,7 @@
    ```bash
    $ git status -s
     M README                # 修改了还没添加
-   MM Rakefile							 # 修改了添加了又修改了
+   MM Rakefile              # 修改了添加了又修改了
    AM index.txt             # 刚刚添加，然后又修改了
    A  lib/git.rb            # 刚刚添加，之后没改过
    M  lib/simplegit.rb      # 修改了又添加了
@@ -32,7 +32,9 @@
 
 7. git checkout -- \<file\>：把暂存区文件拉到工作区
 
-   1. 丢弃工作区修改，如刚刚修改或删除一个文件（还没add），想撤销操作，怎么办？
+   1. 我配置了别名：git config --global alias.dc checkout --（dc是discard changes的缩写）
+
+   2. 丢弃工作区修改，如刚刚修改或删除一个文件（还没add），想撤销操作，怎么办？
 
       ```bash
       $ git checkout -- <file>
@@ -40,7 +42,9 @@
 
 8. git reset HEAD \<file\>：把版本库文件拉到暂存区
 
-   1. 丢弃工作区修改，如刚刚修改或删除一个文件，然后又add了，想撤销操作，怎么办？
+   1. 我配置了别名：git config --global alias.unstage reset HEAD
+
+   2. 丢弃工作区修改，如刚刚修改或删除一个文件，然后又add了，想撤销操作，怎么办？
 
       ```bash
       $ git reset HEAD <file>
@@ -67,30 +71,39 @@
 
 14. .gitigonre文件
 
-    ```bash
-    # "#"号后面是注释
+    1. 基本规则
 
-    # 忽略.a文件
-    *.a
+       1. *匹配0个或多个任意字符
+       2. [abc]匹配a，b，或c（要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）
+       3. 问号（`?`）只匹配一个任意字符
+       4. `[0-9]` 表示匹配所有 0 到 9 的数字
+       5. 两个星号（*) 表示匹配任意中间目录
 
-    # 但是不忽略lib.a
-    !lib.a
+    2. 举例
 
-    # 仅忽略当前目录下的TODO文件，子目录下的不忽略
-    /TODO
+       ```bash
+       # "#"号后面是注释
+       
+       # 忽略.a文件
+       *.a
+       
+       # 但是不忽略lib.a
+       !lib.a
+       
+       # 仅忽略当前目录下的TODO文件，子目录下的不忽略
+       /TODO
+       
+       # 忽略build目录下的所有文件
+       build/
+       
+       # 忽略doc目录下的txt文件，但是doc子目录下的txt不忽略
+       doc/*.txt
+       
+       # 忽略doc及其子目录下的txt
+       doc/**/*.txt
+       ```
 
-    # 忽略build目录下的所有文件
-    build/
-
-    # 忽略doc目录下的txt文件，但是doc子目录下的txt不忽略
-    doc/*.txt
-
-    # 忽略doc及其子目录下的txt
-    doc/**/*.txt
-    ```
-
-
-## Lesson 2 查看提交历史
+## Lesson 2 查看历史
 
 1. git log：查看历史
 
@@ -100,7 +113,9 @@
 
 4. git log --oneline：单行显示
 
-5. git log --pretty=format:"..."：定制化输出格式
+5. git log --abbrev-commit：显示简短哈希
+
+6. git log --pretty=format:"..."：定制化输出格式
 
    1. 举例：<br/>
 
@@ -131,11 +146,15 @@
    | `%cr` | 提交日期，按多久以前的方式显示              |
    | `%s`  | 提交说明                                    |
 
-6. git log --graph：显示分支合并历史
+7. git log --graph：显示分支合并历史
 
-7. git log --stat：简略统计信息
+8. git log --stat：简略统计信息
 
-8. git log --shortstat：只显示--stat最后一行信息
+9. git log --shortstat：只显示--stat最后一行信息
+
+10. git log master..dev：在dev分支中但是不在master分支中的提交
+
+11. git log --left-right master...dev：master或dev中包含但非同时包含的提交，属于master的前面有“<”，属于dev的前面有“>”
 
 ## Lesson 3 打标签
 
@@ -215,7 +234,16 @@
 13. git branch -u origin/serverfix：设置当前分支跟踪远程分支serverfix
 14. git push origin --delete serverfix：删除远程serverfix分支
 
-## Lesson 5 变基
+## Lesson 5 别名
+
+1. git config --global alias.co checkout
+2. git config --global alias.br branch
+3. git config --global alias.ci commit
+4. git config --global alias.st status
+5. git config --global alias.last log -1
+6. git config --global alias.lg log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+## Lesson 6 变基
 
 1. git rebase master：将当前分支在master分支上重放
 2. git rebase --onto master server client：找出处于 `client` 分支和 `server` 分支的共同祖先之后的修改，然后把它们在 `master` 分支上重放
@@ -257,9 +285,48 @@ git rebase --onto master server client
 
 ![截取特性分支上的另一个特性分支，然后变基到其他分支。](https://git-scm.com/book/en/v2/images/interesting-rebase-2.png)
 
-## Lesson 6 
+## Lesson 7 ^和~
 
-John 、Jessica和 Josie 都是底层苦逼码农。 John 与 Jessica 在一个特性上工作，同时 Jessica 与 Josie 在第二个特性上工作。
+1. git show：显示某版本信息
+2. ^：祖先引用
+3. HEAD^：HEAD的父提交
+4. HEAD~2：HEAD的祖父提交
+5. HEAD\^\^\^或HEAD~3：HEAD的第一父提交的第一父提交的第一父提交
+6. HEAD^2：HEAD的第二父提交（只对merge的提交有效）
 
+## Lesson 8 stash和clean
 
+1. git stash：储藏工作目录
 
+2. git stash list：查看储藏
+
+3. git stash apply：恢复工作目录
+
+4. git stash drop stash@{0}：移除stash@{0}
+
+5. git stash pop：储藏然后立即从栈上扔掉它
+
+6. git stash --keep-index：不要储藏已暂存的东西
+
+   1. 应用场景：A文件是左M状态，B文件是A状态，C文件是右M状态，D文件是U状态，即A,B已经添加到暂存区，而C,D还没有添加，即<br/>
+      ```bash
+      $ git status -s
+      M  A
+      A  B
+       M C
+      ?? D
+      ```
+
+      这时想提交对A和B的修改，过一会儿再去处理C和D，可以这么做：
+
+      ```bash
+      git stash --keep-index
+      git commit -m "commit A,B"
+      git stash pop
+      ```
+
+7. git stash branch st：在恢复工作目录的时候新建一个分支，并跳转到这个分支上
+
+8. git clean -f：删除U状态文件
+
+9. git clean -n：一次演习，告诉我将会clean什么
