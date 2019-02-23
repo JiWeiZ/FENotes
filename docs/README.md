@@ -2,7 +2,7 @@
 home: true
 # heroImage: /logo.png
 actionText:  GO FOR A LOOK→
-actionLink: /Catalog/
+actionLink: /JS/
 features:
 - title: 前端知识
   details: 记录前端学习遇到的知识和问题。
