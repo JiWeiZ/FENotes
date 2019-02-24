@@ -10,21 +10,19 @@ function arrToList(arr) {
 }
 var pHead = arrToList([4, 3, 2, 1, 0])
 
-function FindKthToTail(head, k) {
+function ReverseList(pHead) {
   // write code here
-  if (!head || !head.next) return {}
-  var p1 = head, p2 = head
-  for (var i = 0; i < k - 1; i++) {
-    if (p2.next === null) {
-      return {}
-    }
-    p2 = p2.next
+  if (!pHead) return null
+  var p = null, c = pHead, n = pHead.next
+  while (n !== null) {
+    c.next = p
+    p = c
+    c = n
+    n = n.next
   }
-  while (p2.next) {
-    p1 = p1.next
-    p2 = p2.next
-  }
-  return p1
+  c.next = p
+  return c
 }
 
-console.log(FindKthToTail(head, 6))
+var pHeadRev = ReverseList(pHead)
+console.log(pHeadRev)

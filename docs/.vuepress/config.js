@@ -81,8 +81,8 @@ module.exports = {
         text: '其他',
         items: [
           { text: 'Git', link: '/Git/' },
+          { text: 'LeetCode', link: '/LeetCode/' },
           { text: '面经', link: '/Interview/' },
-          { text: 'LC', link: '/LeetCode/' },
           { text: '关于', link: '/About/' },
         ]
       }
