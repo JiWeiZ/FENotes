@@ -980,3 +980,27 @@ function VerifySquenceOfBST(sequence) {
 }
 ```
 
+## 24. [二叉树中和为某一值的路径](https://www.nowcoder.com/practice/b736e784e3e34731af99065031301bca?tpId=13&tqId=11177&tPage=2&rp=2&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+
+> 输入一颗二叉树的跟节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的list中，数组长度大的数组靠前)
+
+```js
+function FindPath (root, expectNumber) {
+  var listAll = [], list = []
+  function FindPathRec(root, expectNumber) {
+    // write code here
+    if (root === null) return []
+    list.push(root.val)
+    expectNumber -= root.val
+    if (expectNumber === 0 && root.left === null && root.right === null) {
+      listAll.push(list.concat())
+    }
+    FindPathRec(root.left, expectNumber)
+    FindPathRec(root.right, expectNumber)
+    list.pop()
+  }
+  FindPathRec(root, expectNumber)
+  return listAll
+}
+```
+

@@ -23,26 +23,15 @@ var root = arrToBST([11, 7, 15, 5, 9, 13, 20])
 
 function PrintFromTopToBottom(root) {
   // write code here
-  let stack = [root], count = 0, arr = []
-  function bfs() {
-    let currentNode = stack[count]
-    if (currentNode) {
-      arr.push(currentNode.val)
-      // console.log(`arr = [${arr}]`)
-      if (currentNode.left) {
-        stack.push(currentNode.left)
-        // console.log(`stack = [${stack.map(e => e.val)}]`)
-      }
-      if (currentNode.right) {
-        stack.push(currentNode.right)
-        // console.log(`stack = [${stack.map(e => e.val)}]`)
-      }
-      count++
-      bfs()
-    }
+  var list = [], stack = [root]
+  if (root === null) return list
+  while (stack.length) {
+    var tmp = stack.pop()
+    list.push(tmp.val)
+    if (tmp.right !== null) stack.push(tmp.right)
+    if (tmp.left !== null) stack.push(tmp.left)
   }
-  bfs()
-  return arr
+  return list
 }
 
 console.log(PrintFromTopToBottom(root))
